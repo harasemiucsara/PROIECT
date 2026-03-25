@@ -1,105 +1,120 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections; 
 using LibrarieModele;
 
 namespace GestiuneProduse
 {
     class Program
     {
-        public static void Main()
+        static void Main()
         {
-            List<Produs> produse = new List<Produs>();
-            Produs produsNou = null;
+            ArrayList listaProduse = new ArrayList();
+            Produs produsCitit = null;
             string optiune;
 
             do
             {
-                Console.WriteLine("\n--- MENIU ---");
-                Console.WriteLine("C. Citire produs");
-                Console.WriteLine("I. Afisare ultim produs");
-                Console.WriteLine("A. Afisare produse");
-                Console.WriteLine("S. Salvare produs");
-                Console.WriteLine("X. Inchidere");
+                Console.WriteLine("\n--- MENIU GESTIUNE STOC ---");
+                Console.WriteLine("C. Citire produs de la tastatura");
+                Console.WriteLine("S. Salvare produs in colectie (ArrayList)");
+                Console.WriteLine("A. Afisare toate produsele");
+                Console.WriteLine("F. Cautare produs dupa nume");
+                Console.WriteLine("X. Iesire");
+                Console.Write("Alegeti optiunea: ");
 
-                Console.WriteLine("Alegeti optiunea:");
-                // Adăugăm ? pentru a preveni erori în cazul în care ReadLine returnează null
                 optiune = Console.ReadLine()?.ToUpper();
 
                 switch (optiune)
                 {
                     case "C":
-                        produsNou = CitireProdus();
-                        break;
-
-                    case "I":
-                        AfisareProdus(produsNou);
-                        break;
-
-                    case "A":
-                        AfisareProduse(produse);
+                        produsCitit = CitireProdusTastatura();
                         break;
 
                     case "S":
-                        if (produsNou != null)
+                        if (produsCitit != null)
                         {
-                            produsNou.IdProdus = produse.Count + 1;
-                            produse.Add(produsNou);
-                            Console.WriteLine("Produs salvat cu succes.");
-                            // Opțional: golim produsNou după salvare ca să nu-l salvăm de 2 ori din greșeală
-                            produsNou = null;
+                            
+                            produsCitit.IdProdus = listaProduse.Count + 1;
+                            listaProduse.Add(produsCitit);
+                            Console.WriteLine("Produsul a fost salvat.");
+                            produsCitit = null; 
                         }
                         else
                         {
-                            Console.WriteLine("Eroare: Nu ai citit niciun produs! Alege 'C' mai intai.");
+                            Console.WriteLine("Eroare");
                         }
                         break;
 
+                    case "A":
+                        AfisareColectie(listaProduse);
+                        break;
+
+                    case "F":
+                        Console.Write("Introduceti numele produsului cautat: ");
+                        string numeCautat = Console.ReadLine();
+                        CautareDupaNume(listaProduse, numeCautat);
+                        break;
+
                     case "X":
-                        Console.WriteLine("Program inchis.");
+                        Console.WriteLine("Aplicatie inchisa.");
                         break;
 
                     default:
-                        Console.WriteLine("Optiune invalida.");
+                        Console.WriteLine("Optiune invalida!");
                         break;
                 }
 
             } while (optiune != "X");
         }
 
-        public static Produs CitireProdus()
+        public static Produs CitireProdusTastatura()
         {
-            Console.WriteLine("Nume produs:");
+            Console.WriteLine("\n--- Introducere date produs ---");
+            Console.Write("Nume: ");
             string nume = Console.ReadLine();
 
-            Console.WriteLine("Cantitate:");
+            Console.Write("Cantitate: ");
             int cantitate = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Pret:");
+            Console.Write("Pret: ");
             float pret = float.Parse(Console.ReadLine());
 
-            Produs produs = new Produs(0, nume, cantitate, pret);
-            return produs;
+            return new Produs(0, nume, cantitate, pret);
         }
 
-        public static void AfisareProdus(Produs produs)
-        {
-            if (produs != null)
-                Console.WriteLine(produs.Info());
-            else
-                Console.WriteLine("Nu exista niciun produs in memorie.");
-        }
-
-        public static void AfisareProduse(List<Produs> produse)
+        public static void AfisareColectie(ArrayList produse)
         {
             if (produse.Count == 0)
             {
-                Console.WriteLine("Lista de produse este goala.");
+                Console.WriteLine("Colectia este goala.");
                 return;
             }
 
-            foreach (Produs produs in produse)
+            Console.WriteLine("\nLista produselor din stoc:");
+            foreach (Produs p in produse)
             {
-                AfisareProdus(produs);
+                Console.WriteLine(p.Info());
+            }
+        }
+
+        public static void CautareDupaNume(ArrayList produse, string numeCautat)
+        {
+            bool gasit = false;
+            Console.WriteLine($"\nRezultate cautare pentru '{numeCautat}':");
+
+            foreach (Produs p in produse)
+            {
+                // Căutare case-insensitive (nu contează literele mari/mici)
+                if (p.Nume.Equals(numeCautat, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine(p.Info());
+                    gasit = true;
+                }
+            }
+
+            if (!gasit)
+            {
+                Console.WriteLine("Nu a fost gasit niciun produs cu acest nume.");
             }
         }
     }
