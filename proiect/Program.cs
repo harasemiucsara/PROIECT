@@ -87,11 +87,22 @@ namespace EvidentaProduse
                             Console.WriteLine("Client salvat in fisier!");
                             break;
 
-                        case "6": 
-                            Client[] listaClienti = adminClienti.GetClienti();
-                            Console.WriteLine("\n--- Lista Clienti ---");
-                            if (listaClienti.Length == 0) Console.WriteLine("Fisierul de clienti este gol.");
-                            else foreach (var c in listaClienti) Console.WriteLine(c.Info());
+                        case "6":
+                            Client[] totiClientii = adminClienti.GetClienti();
+
+                            if (totiClientii.Length == 0)
+                            {
+                                Console.WriteLine("Fisierul de clienti este gol.");
+                                break;
+                            }
+
+                            var clientiOrdonati = totiClientii.OrderBy(c => c.NumeClient).ToArray();
+
+                            Console.WriteLine("\n--- LISTA CLIENȚI (ORDONATĂ ALFABETIC) ---");
+                            foreach (var c in clientiOrdonati)
+                            {
+                                Console.WriteLine(c.Info());
+                            }
                             break;
 
                         case "X":
