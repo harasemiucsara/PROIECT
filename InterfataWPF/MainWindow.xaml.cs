@@ -94,7 +94,7 @@ namespace InterfataWPF
 
         private void CmbFiltru_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listBoxProduse == null) return;
+            if (listBoxProduse == null || txtStatus == null) return;
 
             // Luam textul selectat din ComboBox
             string filtru = (cmbFiltruCategorie.SelectedItem as ComboBoxItem)?.Content.ToString();
