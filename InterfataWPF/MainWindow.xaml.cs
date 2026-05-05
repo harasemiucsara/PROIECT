@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using LibrarieModele;
 
 namespace InterfataWPF
@@ -19,10 +20,10 @@ namespace InterfataWPF
 
         private void MenuNou_Click(object sender, RoutedEventArgs e)
         {
-            // Golim campurile pentru a introduce un produs nou
             txtNume.Text = "";
             txtPret.Text = "";
             txtCantitate.Text = "";
+            dpDataExpirarii.SelectedDate = null;
             chkProdusNou.IsChecked = false;
             chkOferta.IsChecked = false;
             chkResigilat.IsChecked = false;
@@ -71,14 +72,45 @@ namespace InterfataWPF
             if (chkResigilat.IsChecked == true) optiuni = optiuni | OptiuniProdus.Resigilat;
             if (chkCadou.IsChecked == true)     optiuni = optiuni | OptiuniProdus.ProdusCadou;
 
+            // Luam data expirarii din DatePicker
+            string dataExpirarii = "Nespecificata";
+            if (dpDataExpirarii.SelectedDate != null)
+                dataExpirarii = dpDataExpirarii.SelectedDate.Value.ToString("dd.MM.yyyy");
+
             // Cream produsul si il adaugam in lista
             Produs p = new Produs(urmatorul_id, txtNume.Text, cantitate, pret, categorie, optiuni);
             listaProduse.Add(p);
             urmatorul_id++;
 
-            txtMesajAdaugare.Text = $"Produs adaugat! Total produse: {listaProduse.Count}";
+            // Adaugam produsul in ListBox
+            listBoxProduse.Items.Add($"[{p.IdProdus}] {p.Nume} | {p.Pret} lei | {p.Categorie} | Exp: {dataExpirarii}");
+
+            txtMesajAdaugare.Text = $"Produs adaugat! Total: {listaProduse.Count}";
             txtMesajAdaugare.Foreground = System.Windows.Media.Brushes.Green;
             txtStatus.Text = $"Produs '{p.Nume}' adaugat cu succes.";
+        }
+
+        // ==================== FILTRARE CU COMBOBOX ====================
+
+        private void CmbFiltru_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listBoxProduse == null) return;
+
+            // Luam textul selectat din ComboBox
+            string filtru = (cmbFiltruCategorie.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+            listBoxProduse.Items.Clear();
+
+            foreach (Produs p in listaProduse)
+            {
+                // Daca e "Toate", afisam tot; altfel filtram dupa categorie
+                if (filtru == "Toate" || p.Categorie.ToString() == filtru)
+                {
+                    listBoxProduse.Items.Add($"[{p.IdProdus}] {p.Nume} | {p.Pret} lei | {p.Categorie}");
+                }
+            }
+
+            txtStatus.Text = $"Filtru aplicat: {filtru}";
         }
 
         // ==================== CAUTARE PRODUS ====================
@@ -119,7 +151,7 @@ namespace InterfataWPF
                                           $"Cantitate: {gasit.Cantitate} buc.\n" +
                                           $"Categorie: {gasit.Categorie}\n" +
                                           $"Optiuni: {gasit.Optiuni}";
-                txtStatus.Text = $"Cautare finalizata: produs gasit.";
+                txtStatus.Text = "Cautare finalizata: produs gasit.";
             }
             else
             {

@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Evidenta Produse - Harasemiuc Sara"
-        Height="600" Width="750"
-        MinHeight="500" MinWidth="600"
+        Height="640" Width="820"
+        MinHeight="520" MinWidth="640"
         WindowStartupLocation="CenterScreen"
         Background="#F5F0FF">
 
@@ -45,6 +45,12 @@
             <Setter Property="Foreground" Value="#374151"/>
         </Style>
 
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="5,4"/>
+            <Setter Property="Margin" Value="0,2,0,6"/>
+        </Style>
+
         <!-- Stil special pentru titlurile de sectiune -->
         <Style x:Key="TitluSectiune" TargetType="Label">
             <Setter Property="FontSize" Value="15"/>
@@ -76,7 +82,7 @@
         </Menu>
 
         <!-- ===================== TITLU ===================== -->
-        <StackPanel Grid.Row="1" Background="#7C3AED" Margin="0">
+        <StackPanel Grid.Row="1" Background="#7C3AED">
             <Label Content="EVIDENTA PRODUSE"
                    FontSize="20" FontWeight="Bold"
                    Foreground="White"
@@ -87,65 +93,101 @@
         <!-- ===================== CONTINUT PRINCIPAL (Grid responsive) ===================== -->
         <Grid Grid.Row="2" Margin="14">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>   <!-- Coloana stanga -->
-                <ColumnDefinition Width="14"/>  <!-- Spatiu intre coloane -->
-                <ColumnDefinition Width="*"/>   <!-- Coloana dreapta -->
+                <ColumnDefinition Width="*"/>   <!-- Coloana stanga: formular -->
+                <ColumnDefinition Width="14"/>  <!-- Spatiu -->
+                <ColumnDefinition Width="*"/>   <!-- Coloana dreapta: lista + cautare -->
             </Grid.ColumnDefinitions>
 
             <!-- ===== COLOANA STANGA: Adaugare produs ===== -->
-            <StackPanel Grid.Column="0">
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
 
-                <Label Content="Adaugare Produs" Style="{StaticResource TitluSectiune}"/>
+                    <Label Content="Adaugare Produs" Style="{StaticResource TitluSectiune}"/>
 
-                <Label Content="Nume produs:"/>
-                <TextBox x:Name="txtNume"/>
+                    <Label Content="Nume produs:"/>
+                    <TextBox x:Name="txtNume"/>
 
-                <Label Content="Pret (lei):"/>
-                <TextBox x:Name="txtPret"/>
+                    <Label Content="Pret (lei):"/>
+                    <TextBox x:Name="txtPret"/>
 
-                <Label Content="Cantitate:"/>
-                <TextBox x:Name="txtCantitate"/>
+                    <Label Content="Cantitate:"/>
+                    <TextBox x:Name="txtCantitate"/>
 
-                <!-- RadioButton pentru Categorie -->
-                <Label Content="Categorie:" Margin="0,6,0,0"/>
-                <RadioButton x:Name="rbSuplimente" Content="Suplimente"   GroupName="Categorie" IsChecked="True"/>
-                <RadioButton x:Name="rbAlimente"   Content="Alimente"     GroupName="Categorie"/>
-                <RadioButton x:Name="rbCosmetica"  Content="Cosmetica"    GroupName="Categorie"/>
-                <RadioButton x:Name="rbIngrijire"  Content="Produse Ingrijire" GroupName="Categorie"/>
+                    <!-- DatePicker pentru data expirarii -->
+                    <Label Content="Data expirarii:"/>
+                    <DatePicker x:Name="dpDataExpirarii"
+                                FontSize="13"
+                                Margin="0,2,0,6"/>
 
-                <!-- CheckBox pentru Optiuni -->
-                <Label Content="Optiuni speciale:" Margin="0,8,0,0"/>
-                <CheckBox x:Name="chkProdusNou"  Content="Produs Nou"/>
-                <CheckBox x:Name="chkOferta"     Content="Oferta"/>
-                <CheckBox x:Name="chkResigilat"  Content="Resigilat"/>
-                <CheckBox x:Name="chkCadou"      Content="Produs Cadou"/>
+                    <!-- RadioButton pentru Categorie -->
+                    <Label Content="Categorie:" Margin="0,6,0,0"/>
+                    <RadioButton x:Name="rbSuplimente" Content="Suplimente"       GroupName="Categorie" IsChecked="True"/>
+                    <RadioButton x:Name="rbAlimente"   Content="Alimente"         GroupName="Categorie"/>
+                    <RadioButton x:Name="rbCosmetica"  Content="Cosmetica"        GroupName="Categorie"/>
+                    <RadioButton x:Name="rbIngrijire"  Content="Produse Ingrijire" GroupName="Categorie"/>
 
-                <Button Content="Adauga Produs" Click="BtnAdauga_Click"/>
+                    <!-- CheckBox pentru Optiuni -->
+                    <Label Content="Optiuni speciale:" Margin="0,8,0,0"/>
+                    <CheckBox x:Name="chkProdusNou" Content="Produs Nou"/>
+                    <CheckBox x:Name="chkOferta"    Content="Oferta"/>
+                    <CheckBox x:Name="chkResigilat" Content="Resigilat"/>
+                    <CheckBox x:Name="chkCadou"     Content="Produs Cadou"/>
 
-                <!-- Mesaj dupa adaugare -->
-                <TextBlock x:Name="txtMesajAdaugare"
-                           FontSize="12" Foreground="#059669"
-                           TextWrapping="Wrap" Margin="0,6,0,0"/>
+                    <Button Content="Adauga Produs" Click="BtnAdauga_Click"/>
 
-            </StackPanel>
+                    <TextBlock x:Name="txtMesajAdaugare"
+                               FontSize="12" Foreground="#059669"
+                               TextWrapping="Wrap" Margin="0,6,0,0"/>
 
-            <!-- ===== COLOANA DREAPTA: Cautare produs ===== -->
-            <StackPanel Grid.Column="2">
+                </StackPanel>
+            </ScrollViewer>
 
-                <Label Content="Cautare Produs" Style="{StaticResource TitluSectiune}"/>
+            <!-- ===== COLOANA DREAPTA: Lista + Filtru + Cautare ===== -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>  <!-- Titlu lista -->
+                    <RowDefinition Height="*"/>     <!-- ListBox -->
+                    <RowDefinition Height="Auto"/>  <!-- ComboBox filtru -->
+                    <RowDefinition Height="Auto"/>  <!-- Cautare -->
+                </Grid.RowDefinitions>
 
-                <Label Content="Cauta dupa nume:"/>
-                <TextBox x:Name="txtCautare"/>
+                <!-- Lista produse adaugate -->
+                <Label Grid.Row="0"
+                       Content="Lista Produse Adaugate"
+                       Style="{StaticResource TitluSectiune}"/>
 
-                <Button Content="Cauta" Click="BtnCauta_Click"/>
+                <!-- ListBox care afiseaza produsele adaugate -->
+                <ListBox Grid.Row="1"
+                         x:Name="listBoxProduse"
+                         FontSize="12"
+                         Margin="0,0,0,8"
+                         BorderBrush="#A78BFA"/>
 
-                <Label Content="Rezultat cautare:" Margin="0,16,0,0"/>
-                <TextBlock x:Name="txtRezultatCautare"
-                           FontSize="13" Foreground="#1F2937"
-                           TextWrapping="Wrap" Margin="0,4,0,0"
-                           LineHeight="22"/>
+                <!-- ComboBox pentru filtrare dupa categorie -->
+                <StackPanel Grid.Row="2">
+                    <Label Content="Filtreaza dupa categorie:"/>
+                    <ComboBox x:Name="cmbFiltruCategorie"
+                              SelectionChanged="CmbFiltru_SelectionChanged">
+                        <ComboBoxItem Content="Toate" IsSelected="True"/>
+                        <ComboBoxItem Content="Suplimente"/>
+                        <ComboBoxItem Content="Alimente"/>
+                        <ComboBoxItem Content="Cosmetica"/>
+                        <ComboBoxItem Content="Produse Ingrijire"/>
+                    </ComboBox>
+                </StackPanel>
 
-            </StackPanel>
+                <!-- Cautare dupa nume -->
+                <StackPanel Grid.Row="3">
+                    <Label Content="Cauta dupa nume:" Margin="0,6,0,0"/>
+                    <TextBox x:Name="txtCautare"/>
+                    <Button Content="Cauta" Click="BtnCauta_Click"/>
+                    <TextBlock x:Name="txtRezultatCautare"
+                               FontSize="12" Foreground="#1F2937"
+                               TextWrapping="Wrap"
+                               Margin="0,6,0,0" LineHeight="20"/>
+                </StackPanel>
+
+            </Grid>
         </Grid>
 
         <!-- ===================== STATUS BAR ===================== -->
