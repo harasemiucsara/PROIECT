@@ -71,6 +71,9 @@ namespace EvidentaProduse
                                 if (p.Nume.ToLower() == numeCautat.ToLower())
                                 {
                                     Console.WriteLine("Gasit: " + p.Info());
+
+
+
                                     gasit = true;
                                 }
                             }

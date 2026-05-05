@@ -1,0 +1,49 @@
+<Window x:Class="InterfataWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Evidenta Produse"
+        Height="500" Width="600"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F0FF">
+
+    <StackPanel Margin="40">
+
+        <Label Content="EVIDENTA PRODUSE"
+               FontFamily="Segoe UI" FontSize="28" FontWeight="Bold"
+               Foreground="#6B21A8" HorizontalAlignment="Center"/>
+
+        <Label Content="Harasemiuc Sara  ·  PIU  ·  Lab 6"
+               FontFamily="Segoe UI" FontSize="13" FontStyle="Italic"
+               Foreground="#9CA3AF" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+
+        <Label Content="Detalii Produs"
+               FontFamily="Segoe UI" FontSize="16" FontWeight="SemiBold"
+               Foreground="#7C3AED" Margin="0,0,0,10"/>
+
+        <Label x:Name="lblId"
+               FontFamily="Segoe UI" FontSize="14"
+               Foreground="#374151"/>
+
+        <Label x:Name="lblNume"
+               FontFamily="Segoe UI" FontSize="14"
+               Foreground="#374151"/>
+
+        <Label x:Name="lblCategorie"
+               FontFamily="Segoe UI" FontSize="14"
+               Foreground="#374151"/>
+
+        <Label x:Name="lblCantitate"
+               FontFamily="Segoe UI" FontSize="14"
+               Foreground="#374151"/>
+
+        <Label x:Name="lblPret"
+               FontFamily="Segoe UI" FontSize="14"
+               Foreground="#374151"/>
+
+        <Label x:Name="lblOptiuni"
+               FontFamily="Segoe UI" FontSize="14"
+               Foreground="#374151"/>
+
+    </StackPanel>
+
+</Window>

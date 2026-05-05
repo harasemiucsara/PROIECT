@@ -7,7 +7,7 @@ namespace NivelStocareDate
 {
     public class Administrator
     {
-        private const int NR_MAX_PRODUSE = 100;
+        private const int NR_MAX_PRODUSE = 500;
         private Produs[] produse;
         private int nrProduse;
 
