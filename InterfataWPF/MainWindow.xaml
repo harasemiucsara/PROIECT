@@ -2,47 +2,59 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Evidenta Produse"
-        Height="500" Width="600"
+        Height="520" Width="420"
         WindowStartupLocation="CenterScreen"
         Background="#F5F0FF">
 
-    <StackPanel Margin="40">
+    <StackPanel Margin="30">
 
+        <!-- Titlu aplicatie -->
         <Label Content="EVIDENTA PRODUSE"
-               FontFamily="Segoe UI" FontSize="28" FontWeight="Bold"
-               Foreground="#6B21A8" HorizontalAlignment="Center"/>
+               FontSize="22" FontWeight="Bold"
+               Foreground="#6B21A8"
+               HorizontalAlignment="Center"/>
 
-        <Label Content="Harasemiuc Sara  ·  PIU  ·  Lab 6"
-               FontFamily="Segoe UI" FontSize="13" FontStyle="Italic"
-               Foreground="#9CA3AF" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+        <Label Content="Harasemiuc Sara  ·  PIU  ·  Lab 7"
+               FontSize="12" FontStyle="Italic"
+               Foreground="#9CA3AF"
+               HorizontalAlignment="Center"
+               Margin="0,0,0,20"/>
 
-        <Label Content="Detalii Produs"
-               FontFamily="Segoe UI" FontSize="16" FontWeight="SemiBold"
-               Foreground="#7C3AED" Margin="0,0,0,10"/>
+        <!-- Sectiunea de introducere date -->
+        <Label Content="Nume produs:"
+               FontSize="13" Foreground="#374151"/>
 
-        <Label x:Name="lblId"
-               FontFamily="Segoe UI" FontSize="14"
-               Foreground="#374151"/>
+        <TextBox x:Name="txtNumeProdus"
+                 FontSize="13"
+                 Padding="6"
+                 Margin="0,0,0,10"/>
 
-        <Label x:Name="lblNume"
-               FontFamily="Segoe UI" FontSize="14"
-               Foreground="#374151"/>
+        <Label Content="Pret produs (lei):"
+               FontSize="13" Foreground="#374151"/>
 
-        <Label x:Name="lblCategorie"
-               FontFamily="Segoe UI" FontSize="14"
-               Foreground="#374151"/>
+        <TextBox x:Name="txtPretProdus"
+                 FontSize="13"
+                 Padding="6"
+                 Margin="0,0,0,16"/>
 
-        <Label x:Name="lblCantitate"
-               FontFamily="Segoe UI" FontSize="14"
-               Foreground="#374151"/>
+        <!-- Buton pentru afisare -->
+        <Button Content="Afiseaza Produs"
+                FontSize="13" FontWeight="Bold"
+                Background="#7C3AED" Foreground="White"
+                Padding="10,8"
+                Margin="0,0,0,20"
+                Click="BtnAfiseaza_Click"/>
 
-        <Label x:Name="lblPret"
-               FontFamily="Segoe UI" FontSize="14"
-               Foreground="#374151"/>
+        <!-- Zona de afisare rezultat -->
+        <Label Content="Rezultat:"
+               FontSize="13" FontWeight="Bold"
+               Foreground="#6B21A8"/>
 
-        <Label x:Name="lblOptiuni"
-               FontFamily="Segoe UI" FontSize="14"
-               Foreground="#374151"/>
+        <TextBlock x:Name="txtRezultat"
+                   FontSize="13"
+                   Foreground="#1F2937"
+                   TextWrapping="Wrap"
+                   Margin="4,4,0,0"/>
 
     </StackPanel>
 
