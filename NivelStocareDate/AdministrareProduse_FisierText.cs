@@ -34,6 +34,7 @@ namespace NivelStocareDate
                 string linieFisier;
                 while ((linieFisier = sr.ReadLine()) != null)
                 {
+                    if (string.IsNullOrWhiteSpace(linieFisier)) continue;
                     produse[nrProduse++] = new Produs(linieFisier);
                 }
             }

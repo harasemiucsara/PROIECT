@@ -14,6 +14,7 @@
             <Setter Property="Background" Value="#7C3AED"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Bold"/>
+            
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Padding" Value="10,6"/>
             <Setter Property="Margin" Value="0,6,0,0"/>
@@ -29,6 +30,7 @@
 
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="#374151"/>
             <Setter Property="Padding" Value="0,4,0,0"/>
         </Style>
@@ -119,21 +121,43 @@
                                 FontSize="13"
                                 Margin="0,2,0,6"/>
 
-                    <!-- RadioButton pentru Categorie -->
-                    <Label Content="Categorie:" Margin="0,6,0,0"/>
-                    <RadioButton x:Name="rbSuplimente" Content="Suplimente"       GroupName="Categorie" IsChecked="True"/>
-                    <RadioButton x:Name="rbAlimente"   Content="Alimente"         GroupName="Categorie"/>
-                    <RadioButton x:Name="rbCosmetica"  Content="Cosmetica"        GroupName="Categorie"/>
-                    <RadioButton x:Name="rbIngrijire"  Content="Produse Ingrijire" GroupName="Categorie"/>
+                    <!-- Categorie si Optiuni speciale side-by-side -->
+                    <Grid Margin="0,6,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <!-- CheckBox pentru Optiuni -->
-                    <Label Content="Optiuni speciale:" Margin="0,8,0,0"/>
-                    <CheckBox x:Name="chkProdusNou" Content="Produs Nou"/>
-                    <CheckBox x:Name="chkOferta"    Content="Oferta"/>
-                    <CheckBox x:Name="chkResigilat" Content="Resigilat"/>
-                    <CheckBox x:Name="chkCadou"     Content="Produs Cadou"/>
+                        <!-- RadioButton pentru Categorie -->
+                        <StackPanel Grid.Column="0">
+                            <Label Content="Categorie:"/>
+                            <RadioButton x:Name="rbSuplimente" Content="Suplimente"        GroupName="Categorie" IsChecked="True"/>
+                            <RadioButton x:Name="rbAlimente"   Content="Alimente"          GroupName="Categorie"/>
+                            <RadioButton x:Name="rbCosmetica"  Content="Cosmetica"         GroupName="Categorie"/>
+                            <RadioButton x:Name="rbIngrijire"  Content="Produse Ingrijire" GroupName="Categorie"/>
+                        </StackPanel>
 
-                    <Button Content="Adauga Produs" Click="BtnAdauga_Click"/>
+                        <!-- CheckBox pentru Optiuni speciale -->
+                        <StackPanel Grid.Column="2">
+                            <Label Content="Optiuni speciale:"/>
+                            <CheckBox x:Name="chkProdusNou" Content="Produs Nou"/>
+                            <CheckBox x:Name="chkOferta"    Content="Oferta"/>
+                            <CheckBox x:Name="chkResigilat" Content="Resigilat"/>
+                            <CheckBox x:Name="chkCadou"     Content="Produs Cadou"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Butoane Adauga si Reset -->
+                    <Grid Margin="0,4,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Adauga Produs" Click="BtnAdauga_Click"/>
+                        <Button Grid.Column="2" Content="Reseteaza" Click="MenuNou_Click"/>
+                    </Grid>
 
                     <TextBlock x:Name="txtMesajAdaugare"
                                FontSize="12" Foreground="#059669"

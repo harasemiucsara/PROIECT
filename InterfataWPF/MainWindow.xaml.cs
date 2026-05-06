@@ -22,16 +22,23 @@ namespace InterfataWPF
 
         private void IncarcaProduseDinFisier()
         {
-            Produs[] produseIncarcate = stocareProduse.GetProduse();
-            foreach (Produs p in produseIncarcate)
+            try
             {
-                listaProduse.Add(p);
-                listBoxProduse.Items.Add($"[{p.IdProdus}] {p.Nume} | {p.Pret} lei | {p.Categorie}");
-                if (p.IdProdus >= urmatorul_id)
-                    urmatorul_id = p.IdProdus + 1;
+                Produs[] produseIncarcate = stocareProduse!.GetProduse();
+                foreach (Produs p in produseIncarcate)
+                {
+                    listaProduse.Add(p);
+                    listBoxProduse.Items.Add($"[{p.IdProdus}] {p.Nume} | {p.Pret} lei | {p.Categorie}");
+                    if (p.IdProdus >= urmatorul_id)
+                        urmatorul_id = p.IdProdus + 1;
+                }
+                if (listaProduse.Count > 0)
+                    txtStatus.Text = $"Date incarcate din fisier: {listaProduse.Count} produse.";
             }
-            if (listaProduse.Count > 0)
-                txtStatus.Text = $"Date incarcate din fisier: {listaProduse.Count} produse.";
+            catch
+            {
+                txtStatus.Text = "Fisierul de date existent nu a putut fi citit. Se porneste cu lista goala.";
+            }
         }
 
         // ==================== MENIU ====================
