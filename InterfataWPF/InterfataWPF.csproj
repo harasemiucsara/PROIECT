@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibrarieModele\LibrarieModele.csproj" />
+    <ProjectReference Include="..\NivelStocareDate\NivelStocareDate.csproj" />
   </ItemGroup>
 
 </Project>

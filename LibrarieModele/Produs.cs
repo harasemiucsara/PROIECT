@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace LibrarieModele
 {
@@ -56,14 +57,14 @@ namespace LibrarieModele
             IdProdus = int.Parse(dateFisier[0]);
             Nume = dateFisier[1];
             Cantitate = int.Parse(dateFisier[2]);
-            Pret = float.Parse(dateFisier[3]);
+            Pret = float.Parse(dateFisier[3], CultureInfo.InvariantCulture);
             Categorie = (CategorieProdus)Enum.Parse(typeof(CategorieProdus), dateFisier[4]);
             Optiuni = (OptiuniProdus)Enum.Parse(typeof(OptiuniProdus), dateFisier[5]);
         }
 
         public string ConversieLaSir_PentruFisier()
         {
-            return $"{IdProdus},{Nume},{Cantitate},{Pret},{Categorie},{Optiuni}";
+            return $"{IdProdus},{Nume},{Cantitate},{Pret.ToString(CultureInfo.InvariantCulture)},{Categorie},{Optiuni}";
         }
     }
 

@@ -2,18 +2,36 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using LibrarieModele;
+using NivelStocareDate;
 
 namespace InterfataWPF
 {
     public partial class MainWindow : Window
     {
-        // Lista in care pastram produsele adaugate
         private List<Produs> listaProduse = new List<Produs>();
         private int urmatorul_id = 1;
+        private AdministrareProduse_FisierText? stocareProduse;
 
         public MainWindow()
         {
             InitializeComponent();
+            string caleFisier = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "produse.txt");
+            stocareProduse = new AdministrareProduse_FisierText(caleFisier);
+            IncarcaProduseDinFisier();
+        }
+
+        private void IncarcaProduseDinFisier()
+        {
+            Produs[] produseIncarcate = stocareProduse.GetProduse();
+            foreach (Produs p in produseIncarcate)
+            {
+                listaProduse.Add(p);
+                listBoxProduse.Items.Add($"[{p.IdProdus}] {p.Nume} | {p.Pret} lei | {p.Categorie}");
+                if (p.IdProdus >= urmatorul_id)
+                    urmatorul_id = p.IdProdus + 1;
+            }
+            if (listaProduse.Count > 0)
+                txtStatus.Text = $"Date incarcate din fisier: {listaProduse.Count} produse.";
         }
 
         // ==================== MENIU ====================
@@ -77,9 +95,10 @@ namespace InterfataWPF
             if (dpDataExpirarii.SelectedDate != null)
                 dataExpirarii = dpDataExpirarii.SelectedDate.Value.ToString("dd.MM.yyyy");
 
-            // Cream produsul si il adaugam in lista
+            // Cream produsul si il adaugam in lista si in fisier
             Produs p = new Produs(urmatorul_id, txtNume.Text, cantitate, pret, categorie, optiuni);
             listaProduse.Add(p);
+            stocareProduse.AdaugaProdus(p);
             urmatorul_id++;
 
             // Adaugam produsul in ListBox
@@ -134,6 +153,9 @@ namespace InterfataWPF
             // Cautam produsul dupa nume
             Produs gasit = null;
             foreach (Produs p in listaProduse)
+
+
+
             {
                 if (p.Nume.ToLower().Contains(numeCautat))
                 {
