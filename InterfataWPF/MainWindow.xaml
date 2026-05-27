@@ -7,7 +7,6 @@
         WindowStartupLocation="CenterScreen"
         Background="#F5F0FF">
 
-    <!-- BONUS: Stiluri comune definite in Window.Resources -->
     <Window.Resources>
 
         <Style TargetType="Button">
@@ -53,7 +52,6 @@
             <Setter Property="Margin" Value="0,2,0,6"/>
         </Style>
 
-        <!-- Stil special pentru titlurile de sectiune -->
         <Style x:Key="TitluSectiune" TargetType="Label">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -65,13 +63,12 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>  <!-- Meniu -->
-            <RowDefinition Height="Auto"/>  <!-- Titlu -->
-            <RowDefinition Height="*"/>     <!-- Continut principal -->
-            <RowDefinition Height="Auto"/>  <!-- Status bar -->
+            <RowDefinition Height="Auto"/>  
+            <RowDefinition Height="Auto"/> 
+            <RowDefinition Height="*"/>    
+            <RowDefinition Height="Auto"/>  
         </Grid.RowDefinitions>
 
-        <!-- ===================== MENIU ===================== -->
         <Menu Grid.Row="0" Background="#EDE9FE" FontSize="13">
             <MenuItem Header="Fisier">
                 <MenuItem Header="Nou" Click="MenuNou_Click"/>
@@ -83,7 +80,6 @@
             </MenuItem>
         </Menu>
 
-        <!-- ===================== TITLU ===================== -->
         <StackPanel Grid.Row="1" Background="#7C3AED">
             <Label Content="EVIDENTA PRODUSE"
                    FontSize="20" FontWeight="Bold"
@@ -92,15 +88,13 @@
                    Padding="10,8"/>
         </StackPanel>
 
-        <!-- ===================== CONTINUT PRINCIPAL (Grid responsive) ===================== -->
         <Grid Grid.Row="2" Margin="14">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>   <!-- Coloana stanga: formular -->
-                <ColumnDefinition Width="14"/>  <!-- Spatiu -->
-                <ColumnDefinition Width="*"/>   <!-- Coloana dreapta: lista + cautare -->
+                <ColumnDefinition Width="*"/>   
+                <ColumnDefinition Width="14"/> 
+                <ColumnDefinition Width="*"/>  
             </Grid.ColumnDefinitions>
 
-            <!-- ===== COLOANA STANGA: Adaugare produs ===== -->
             <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
 
@@ -115,13 +109,11 @@
                     <Label Content="Cantitate:"/>
                     <TextBox x:Name="txtCantitate"/>
 
-                    <!-- DatePicker pentru data expirarii -->
                     <Label Content="Data expirarii:"/>
                     <DatePicker x:Name="dpDataExpirarii"
                                 FontSize="13"
                                 Margin="0,2,0,6"/>
 
-                    <!-- Categorie si Optiuni speciale side-by-side -->
                     <Grid Margin="0,6,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -129,7 +121,6 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- RadioButton pentru Categorie -->
                         <StackPanel Grid.Column="0">
                             <Label Content="Categorie:"/>
                             <RadioButton x:Name="rbSuplimente" Content="Suplimente"        GroupName="Categorie" IsChecked="True"/>
@@ -138,7 +129,6 @@
                             <RadioButton x:Name="rbIngrijire"  Content="Produse Ingrijire" GroupName="Categorie"/>
                         </StackPanel>
 
-                        <!-- CheckBox pentru Optiuni speciale -->
                         <StackPanel Grid.Column="2">
                             <Label Content="Optiuni speciale:"/>
                             <CheckBox x:Name="chkProdusNou" Content="Produs Nou"/>
@@ -148,7 +138,6 @@
                         </StackPanel>
                     </Grid>
 
-                    <!-- Butoane Adauga si Reset -->
                     <Grid Margin="0,4,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -166,28 +155,25 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <!-- ===== COLOANA DREAPTA: Lista + Filtru + Cautare ===== -->
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>  <!-- Titlu lista -->
-                    <RowDefinition Height="*"/>     <!-- ListBox -->
-                    <RowDefinition Height="Auto"/>  <!-- ComboBox filtru -->
-                    <RowDefinition Height="Auto"/>  <!-- Cautare -->
+                    <RowDefinition Height="Auto"/> 
+                    <RowDefinition Height="*"/>   
+                    <RowDefinition Height="Auto"/> 
+                    <RowDefinition Height="Auto"/>  
                 </Grid.RowDefinitions>
 
-                <!-- Lista produse adaugate -->
                 <Label Grid.Row="0"
                        Content="Lista Produse Adaugate"
                        Style="{StaticResource TitluSectiune}"/>
 
-                <!-- ListBox care afiseaza produsele adaugate -->
                 <ListBox Grid.Row="1"
                          x:Name="listBoxProduse"
+                         ItemsSource="{Binding ProduseLista}"
                          FontSize="12"
                          Margin="0,0,0,8"
                          BorderBrush="#A78BFA"/>
 
-                <!-- ComboBox pentru filtrare dupa categorie -->
                 <StackPanel Grid.Row="2">
                     <Label Content="Filtreaza dupa categorie:"/>
                     <ComboBox x:Name="cmbFiltruCategorie"
@@ -200,7 +186,6 @@
                     </ComboBox>
                 </StackPanel>
 
-                <!-- Cautare dupa nume -->
                 <StackPanel Grid.Row="3">
                     <Label Content="Cauta dupa nume:" Margin="0,6,0,0"/>
                     <TextBox x:Name="txtCautare"/>
@@ -214,10 +199,9 @@
             </Grid>
         </Grid>
 
-        <!-- ===================== STATUS BAR ===================== -->
         <StatusBar Grid.Row="3" Background="#EDE9FE">
             <TextBlock x:Name="txtStatus"
-                       Text="Gata. Introduceti datele unui produs."
+                       Text="{Binding StatusMesaj}"
                        FontSize="11" Foreground="#6B21A8"/>
         </StatusBar>
 
